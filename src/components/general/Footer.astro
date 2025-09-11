@@ -1,0 +1,33 @@
+---
+import { orgData } from "../data/contactdata";
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-eerie-black text-primary py-28" role="contentinfo">
+  <div class="md:w-[70%] mx-auto">
+    <div class="text-center md:text-left text-sunset">
+      <h3 class="text-xl font-bold text-primary mb-4">Contacto</h3>
+      <div class="space-y-2 text-dark">
+        <p class="flex items-center gap-2 justify-center md:justify-start">
+          <a href={`mailto:${orgData[0].email}`} class="hover:text-secondary transition-colors">
+            {orgData[0].email}
+          </a>
+        </p>
+        <p class="flex items-center gap-2 justify-center md:justify-start">
+          <a href={`tel:${orgData[0].phone}`} class="hover:text-secondary transition-colors">
+            {orgData[0].phone}
+          </a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Línea divisoria -->
+    <div class="border-t border-primary border-sunset mt-8 pt-8">
+      <div class="">
+        <p class="text-sm text-sunset">
+          &copy; {currentYear} Carlos Salinas. Todos los derechos reservados.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

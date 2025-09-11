@@ -1,0 +1,23 @@
+---
+// Button.astro
+type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'outline';
+
+const { href, text, variant = "primary", id = "" } = Astro.props;
+
+// Define clases base del botón con ancho automático y responsive
+const baseClasses = "inline-flex items-center justify-center font-special rounded-xl hover:scale-105 w-auto font-medium";
+const responsiveClasses = "px-6 py-3 text-sm sm:text-base"; // Tamaños de padding y fuente responsivos
+
+// Variantes del botón
+const variantClasses: Record<ButtonVariant, string> = {
+  primary: "text-olive-black bg-sunset  transition-all duration-300 ",
+  secondary: "text-bone-white bg-olive-black hover:bg-primary transition-all duration-300",
+};
+
+// Combina todas las clases
+const classes = `${baseClasses} ${responsiveClasses} ${variantClasses[variant as ButtonVariant]}`;
+---
+
+<a href={href} class={classes} id={id}>{text}</a>
+
+

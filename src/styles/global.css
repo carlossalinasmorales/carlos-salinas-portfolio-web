@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+    --color-bone-white: #EDF2F4; 
+    --color-sunset: #EAC396;
+    --color-olive-black: #403D39;
+    --color-eerie-black: #252422;
+    --font-medium: 'GeneralSans-Medium', sans-serif;
+    --font-bold: 'GeneralSans-Bold', sans-serif;
+  }
+
+@font-face {
+    font-family: 'GeneralSans';
+    src: url('/fonts/GeneralSans-Regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'GeneralSans-Bold';
+    src: url('fonts/GeneralSans-Bold.woff2') format('woff2');
+}
+
+@font-face { 
+    font-family: 'GeneralSans-Medium';
+    src: url('/fonts/GeneralSans-Medium.woff2') format('woff2');
+}
