@@ -1,22 +1,26 @@
 ---
 import Button from './ui/Button.astro';
 import ParticleBackground from './ui/ParticleBackground';
+import { orgData } from "./data/contactdata";
 ---
 
-<section class="">
-    <ParticleBackground client:load height="100vh" backgroundColor="bg-bone-white">
+<section class="bg-gradient-to-b from-bone-whie to-white">
+    <ParticleBackground client:load height="100vh" backgroundColor="bg-gradient-to-b from-bone-whie to-white">
         <div class="w-full max-w-5xl mx-auto px-4 h-full flex items-center justify-center">
             <div class="text-center text-olive-black">
-                <h1 class="text-6xl md:text-8xl lg:text-[140px] font-bold leading-tight md:leading-[110px] mb-4">
+                <h1 class="text-6xl md:text-7xl font-bold leading-[65px]  mb-6">
                     Carlos<br> Salinas
                 </h1>
 
                 <!-- Botones de redes sociales -->
-                <div class="flex gap-4 justify-center mb-4">
+                <div class="flex gap-4 justify-center mb-6">
+
+
+
                     <!-- LinkedIn -->
                     <a 
-                        href="https://linkedin.com/in/tu-linkedin" 
-                        class="group inline-flex items-center justify-center w-12 h-12 bg-white/20 backdrop-blur-sm border border-olive-black/20 text-olive-black rounded-xl hover:bg-olive-black hover:text-white hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl"
+                        href={`${orgData[0].linkedin}`}
+                        class="group inline-flex items-center justify-center w-12 h-12 bg-white/20 backdrop-blur-sm  text-olive-black rounded-xl hover:bg-olive-black hover:text-white hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl"
                         aria-label="LinkedIn"
                     >
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -26,8 +30,8 @@ import ParticleBackground from './ui/ParticleBackground';
                     
                     <!-- GitHub -->
                     <a 
-                        href="https://github.com/tu-github" 
-                        class="group inline-flex items-center justify-center w-12 h-12 bg-white/20 backdrop-blur-sm border border-olive-black/20 text-olive-black rounded-xl hover:bg-olive-black hover:text-white hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl"
+                        href={`${orgData[0].github}`}
+                        class="group inline-flex items-center justify-center w-12 h-12 bg-white/20 backdrop-blur-sm  text-olive-black rounded-xl hover:bg-olive-black hover:text-white hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl"
                         aria-label="GitHub"
                     >
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -36,8 +40,10 @@ import ParticleBackground from './ui/ParticleBackground';
                     </a>
                 </div>
 
-                <h2 class="text-2xl md:text-4xl font-medium mb-4 opacity-90">
-                    Desarrollador de soluciones (humo)
+                <h2 class="text-md max-w-xl font-medium mb-6 opacity-90">
+                    ¡Hola! Soy ingeniero comercial con máster en negocios digitales. He trabajado creando 
+                    soluciones digitales y también dirigiendo pequeñás y medianas empresas, lo que me da una visión amplia de 
+                    los desafíos de una organización. Mi enfoque es combinar estrategia y tecnología para lograr resultados reales.
                 </h2>
                 
                 <!-- Botones de navegación -->
