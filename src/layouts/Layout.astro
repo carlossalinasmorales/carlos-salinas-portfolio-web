@@ -13,7 +13,7 @@ import Header from "../components/general/Header";
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro Basics</title>
 	</head>
-	<body>
+	<body class="m-0 w-full h-full text-olive-black font-regular">
 		<Header client:load/>
 			<main>
 				<slot />
@@ -22,12 +22,4 @@ import Header from "../components/general/Header";
 	</body>
 </html>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-		font-family: GeneralSans, sans-serif;
-	}
-</style>
+

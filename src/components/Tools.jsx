@@ -24,6 +24,7 @@ const tools = [
   { nombre: "SQLite", logo: "assets/images/tools/sqlitelogo.webp" },
   { nombre: "Tailwind CSS", logo: "assets/images/tools/tailwindlogo.webp" },
   { nombre: "WordPress", logo: "assets/images/tools/wplogo.webp" },
+  { nombre: "Spark", logo: "assets/images/tools/sparklogo.webp" },
 ];
 
 export default function Tools() {
@@ -33,7 +34,7 @@ export default function Tools() {
   return (
     <section
       id="tools"
-      className="bg-white flex flex-col items-center justify-center py-4 w-full overflow-hidden"
+      className="flex flex-col items-center justify-center py-4 w-full overflow-hidden"
       aria-labelledby="tools-heading"
     >
       <div className="w-full relative">
