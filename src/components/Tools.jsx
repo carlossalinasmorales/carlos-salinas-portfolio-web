@@ -1,26 +1,40 @@
 import React from "react";
 
-const clientes = [
-  { nombre: "KFC", logo: "assets/images/empresas/kfc.jpg" },
-  { nombre: "Wendy's", logo: "assets/images/empresas/wendys.jpg" },
-  { nombre: "Burger King", logo: "assets/images/empresas/burgerking.jpg" },
-  { nombre: "Tarragona", logo: "assets/images/empresas/tarragona.jpg" },
-  { nombre: "Telepizza", logo: "assets/images/empresas/telepizza.jpg" },
-  { nombre: "Uno Salud", logo: "assets/images/empresas/unosalud.jpg" },
-  { nombre: "Chinawok", logo: "assets/images/empresas/chinawok.jpg" },
-  { nombre: "Johnny Rockets", logo: "assets/images/empresas/jr.jpg" },
-  { nombre: "Degasa", logo: "assets/images/empresas/degasa.jpg" },
+const tools = [
+  { nombre: "Adobe Illustrator", logo: "assets/images/tools/ailogo.webp" },
+  { nombre: "Astro", logo: "assets/images/tools/astrologo.webp" },
+  { nombre: "CSS", logo: "assets/images/tools/csslogo.webp" },
+  { nombre: "Docker", logo: "assets/images/tools/dockerlogo.webp" },
+  { nombre: "Excel", logo: "assets/images/tools/excellogo.webp" },
+  { nombre: "FastAPI", logo: "assets/images/tools/fastapilogo.webp" },
+  { nombre: "Figma", logo: "assets/images/tools/figmalogo.webp" },
+  { nombre: "Git", logo: "assets/images/tools/gitlogo.webp" },
+  { nombre: "HTML", logo: "assets/images/tools/htmllogo.webp" },
+  { nombre: "JavaScript", logo: "assets/images/tools/jslogo.webp" },
+  { nombre: "MySQL", logo: "assets/images/tools/mysqllogo.webp" },
+  { nombre: "n8n", logo: "assets/images/tools/n8nlogo.webp" },
+  { nombre: "Nginx", logo: "assets/images/tools/nginxlogo.webp" },
+  { nombre: "PostgreSQL", logo: "assets/images/tools/postgrelogo.webp" },
+  { nombre: "Postman", logo: "assets/images/tools/postmanlogo.webp" },
+  { nombre: "Power BI", logo: "assets/images/tools/powerbilogo.webp" },
+  { nombre: "Adobe Photoshop", logo: "assets/images/tools/pslogo.webp" },
+  { nombre: "Python", logo: "assets/images/tools/pythonlogo.webp" },
+  { nombre: "React", logo: "assets/images/tools/reactlogo.webp" },
+  { nombre: "Shopify", logo: "assets/images/tools/shopifylogo.webp" },
+  { nombre: "SQLite", logo: "assets/images/tools/sqlitelogo.webp" },
+  { nombre: "Tailwind CSS", logo: "assets/images/tools/tailwindlogo.webp" },
+  { nombre: "WordPress", logo: "assets/images/tools/wplogo.webp" },
 ];
 
-export default function Clients() {
+export default function Tools() {
   // Duplicamos los logos para el efecto infinito
-  const logos = [...clientes, ...clientes];
+  const logos = [...tools, ...tools];
 
   return (
     <section
-      id="clients"
+      id="tools"
       className="bg-white flex flex-col items-center justify-center py-4 w-full overflow-hidden"
-      aria-labelledby="clients-heading"
+      aria-labelledby="tools-heading"
     >
       <div className="w-full relative">
         <div 
@@ -30,14 +44,14 @@ export default function Clients() {
             animation: 'scroll 27s linear infinite'
           }}
         >
-          {logos.map((cliente, idx) => (
+          {logos.map((tool, idx) => (
             <div
               className="flex items-center justify-center min-w-[140px] mx-8 flex-shrink-0"
               key={idx}
             >
               <img
-                src={cliente.logo}
-                alt={`Logotipo de ${cliente.nombre}`}
+                src={tool.logo}
+                alt={`Logotipo de ${tool.nombre}`}
                 className="h-[100px] w-auto filter grayscale brightness-100 opacity-90 transition-all duration-300 hover:grayscale-0 hover:opacity-100 select-none"
                 loading="lazy"
                 draggable="false"
