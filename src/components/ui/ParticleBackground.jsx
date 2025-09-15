@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
+
+
 const ParticleBackground = ({ children, height = '80vh', backgroundColor = 'bg-white' }) => {
   const canvasRef = useRef(null);
   const animationRef = useRef(null);
@@ -138,6 +140,7 @@ const ParticleBackground = ({ children, height = '80vh', backgroundColor = 'bg-w
   return (
     <div className={`relative w-full overflow-hidden ${backgroundColor}`} style={{ height }}>
       {/* Canvas para las partículas */}
+      {/* Componente de fondo de particulas inspirado (muy) en https://www.yan-holtz.com/ */}
       <canvas 
         ref={canvasRef}
         className="absolute inset-0 w-full h-full z-0"

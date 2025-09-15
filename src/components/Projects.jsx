@@ -67,7 +67,7 @@ const Projects = () => {
   }, []);
 
   return (
-    <section id="projects" className="py-8 sm:py-12 bg-white">
+    <section id="projects" className="pb-12 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header */}
         <div className="text-center mb-6 sm:mb-8">
