@@ -1,7 +1,7 @@
 export const menuItems = [
     { href: "#about", label: "Sobre mí" },
     { href: "#projects", label: "Proyectos" },
-    { href: "/contacto", label: "Contacto" },
+    { href: "#contact", label: "Contacto" },
   ];
 
 export const serviciosItems = [

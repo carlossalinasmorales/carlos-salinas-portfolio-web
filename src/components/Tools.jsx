@@ -53,7 +53,7 @@ export default function Tools() {
               <img
                 src={tool.logo}
                 alt={`Logotipo de ${tool.nombre}`}
-                className="h-[100px] w-auto filter grayscale brightness-100 opacity-90 transition-all duration-300 hover:grayscale-0 hover:opacity-100 select-none"
+                className="h-[70px] md:h-[100px] w-auto filter grayscale brightness-100 opacity-90 transition-all duration-300 hover:grayscale-0 hover:opacity-100 select-none"
                 loading="lazy"
                 draggable="false"
               />

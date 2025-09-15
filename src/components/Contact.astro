@@ -1,0 +1,163 @@
+<section id="contact" class="content-center bg-sunset">
+  <div
+    class="max-w-[90%] md:max-w-[80%] xl:max-w-[60%] py-30 mx-auto grid grid-cols-1 md:grid-cols-2 gap-12"
+  >
+    <!-- Columna izquierda: Texto persuasivo -->
+    <div class="space-y-6 fade-in-left delay-100">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold">Hablemos!</h1>
+      <p class="text-xl md:text-6xl">
+        Podemos lograr grandes cosas juntos :)
+      </p>
+    </div>
+
+    <!-- Columna derecha: Formulario -->
+    <div
+      class="bg-olive-black shadow-xl rounded-md p-8 w-full fade-in-up delay-200 text-sunset"
+    >
+      <!-- Mensaje de éxito oculto inicialmente -->
+      <div
+        id="successMessage"
+        class="hidden mb-4 p-4 border rounded-lg font-medium transition-all duration-300"
+      >
+        ¡Mensaje enviado con éxito!
+      </div>
+      <form id="contactForm" method="POST" class="space-y-5">
+        <input
+          type="text"
+          name="hp"
+          style="display:none"
+          tabindex="-1"
+          autocomplete="off"
+        />
+        <input type="hidden" name="ts" value="${Date.now()}" />
+        <div>
+          <label for="nombre" class="block text-sm font-medium">Nombre</label>
+          <input
+            type="text"
+            name="nombre"
+            id="nombre"
+            required
+            class="mt-1 block w-full px-4 py-2 border border-sunset rounded-lg shadow-sm focus:outline-none focus:ring-0"
+          />
+        </div>
+
+        <div>
+          <label for="empresa" class="block text-sm font-medium "
+            >Empresa</label
+          >
+          <input
+            type="text"
+            name="empresa"
+            id="empresa"
+            required
+            class="mt-1 block w-full px-4 py-2 border border-sunset rounded-lg shadow-sm focus:outline-none focus:ring-0"
+          />
+        </div>
+
+        <div>
+          <label for="email" class="block text-sm font-medium "
+            >Correo electrónico</label
+          >
+          <input
+            type="email"
+            name="email"
+            id="email"
+            required
+            class="mt-1 block w-full px-4 py-2 border border-sunset rounded-lg shadow-sm focus:outline-none focus:ring-0"
+          />
+        </div>
+
+        <div>
+          <label for="mensaje" class="block text-sm font-medium "
+            >Mensaje</label
+          >
+          <textarea
+            name="mensaje"
+            id="mensaje"
+            rows="5"
+            required
+            class="mt-1 block w-full px-4 py-2 border border-sunset rounded-lg shadow-sm focus:outline-none focus:ring-0"
+          ></textarea>
+        </div>
+
+        <div>
+          <button
+            type="submit"
+            class="bg-sunset text-olive-black py-4 px-4 rounded-lg transition-all duration-300 hover:scale-102 font-medium cursor-pointer"
+          >
+            Enviar mensaje
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById("contactForm");
+  const messageDiv = document.getElementById("successMessage");
+
+  const showMessage = (message, isError = false) => {
+    if (messageDiv) {
+      messageDiv.textContent = message;
+      messageDiv.classList.remove("hidden");
+
+      // Aplicar estilos según el tipo de mensaje
+      if (isError) {
+        messageDiv.classList.remove(
+          "border-primary",
+          "text-primary",
+          "bg-primary/10",
+        );
+        messageDiv.classList.add("border-red-500", "text-red-500", "bg-red-50");
+      } else {
+        messageDiv.classList.remove(
+          "border-red-500",
+          "text-red-500",
+          "bg-red-50",
+        );
+        messageDiv.classList.add(
+          "border-primary",
+          "text-primary",
+          "bg-primary/10",
+        );
+      }
+
+      // Ocultar después de 5 segundos
+      setTimeout(() => {
+        messageDiv.classList.add("hidden");
+      }, 5000);
+    }
+  };
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+
+    try {
+      // Enviar a tu endpoint de API interno (no directamente a n8n)
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        showMessage(data.message || "¡Mensaje enviado con éxito!");
+        form.reset();
+      } else {
+        showMessage(
+          data.message || "Hubo un error al enviar el formulario.",
+          true,
+        );
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      showMessage(
+        "Hubo un error al enviar el formulario. Intenta nuevamente.",
+        true,
+      );
+    }
+  });
+</script>
