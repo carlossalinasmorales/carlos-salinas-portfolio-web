@@ -1,0 +1,121 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { projects } from "../../components/data/projects";
+
+// Función requerida para rutas dinámicas
+export async function getStaticPaths() {
+  return [
+    {
+      params: { slug: "lung-cancer-risk-prediction" },
+      props: { project: projects[0] },
+    },
+    {
+      params: { slug: "curve-analysis" },
+      props: { project: projects[1] },
+    },
+    {
+      params: { slug: "document-formatting-options" },
+      props: { project: projects[2] },
+    },
+    {
+      params: { slug: "bubble-chart-categorization" },
+      props: { project: projects[3] },
+    },
+  ];
+}
+
+// Obtener el proyecto desde props
+const { project } = Astro.props;
+---
+
+
+
+<Layout title={`${project.title} | Proyectos`}>
+  <section class="py-12 md:py-20 bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center gap-2 text-sm text-olive-black/70 py-6">
+        <a class="hover:underline" href="/">Inicio</a>
+        <span>/</span>
+        <a class="hover:underline" href="/#projects">Proyectos</a>
+        <span>/</span>
+        <span class="text-olive-black">{project.title}</span>
+      </div>
+
+      <header class="mb-6 sm:mb-8">
+        <h1 class="text-2xl sm:text-3xl font-bold text-olive-black mb-3">{project.title}</h1>
+        <div class="flex items-center gap-2 flex-wrap">
+          {Array.isArray(project.category) ? (
+            project.category.map((cat) => (
+              <span class="bg-sunset/20 text-sunset px-3 py-1 rounded-full text-xs sm:text-sm font-medium">
+                {cat}
+              </span>
+            ))
+          ) : (
+            <span class="bg-sunset/20 text-sunset px-3 py-1 rounded-full text-xs sm:text-sm font-medium">
+              {project.category}
+            </span>
+          )}
+          {project.metrics && (
+            <div class="flex gap-2 text-xs sm:text-sm text-olive-black">
+              <span class="bg-gray-100 px-2 sm:px-3 py-1 rounded-full">R² → {project.metrics.r2}</span>
+              <span class="bg-gray-100 px-2 sm:px-3 py-1 rounded-full">Correlation → {project.metrics.correlation}</span>
+            </div>
+          )}
+        </div>
+      </header>
+
+      <div
+        class="h-52 sm:h-72 lg:h-96 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl mb-6 sm:mb-8 overflow-hidden relative"
+        style={`background-image:url(${project.image});background-size:cover;background-position:center;`}
+      >
+        <div class="absolute inset-0 bg-black/20"></div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-10 items-start">
+        <article class="lg:col-span-2 space-y-6">
+          <section>
+            <h2 class="text-lg sm:text-xl font-semibold text-olive-black mb-2">Descripción</h2>
+            <p class="text-olive-black/70 leading-relaxed">{project.details.overview}</p>
+          </section>
+
+          <section>
+            <h2 class="text-lg sm:text-xl font-semibold text-olive-black mb-2">Características</h2>
+            <ul class="list-disc list-inside text-olive-black/70 space-y-1">
+              {project.details.features.map((feature) => (
+                <li>{feature}</li>
+              ))}
+            </ul>
+          </section>
+        </article>
+
+        <aside class="lg:col-span-1 space-y-6">
+          <section>
+            <h3 class="text-base sm:text-lg font-semibold text-olive-black mb-2">Tecnologías</h3>
+            <div class="flex flex-wrap gap-2">
+              {project.details.technologies.map((tech) => (
+                <span class="bg-gray-100 text-olive-black px-3 py-1 rounded-full text-xs sm:text-sm">{tech}</span>
+              ))}
+            </div>
+          </section>
+
+          <section>
+            <h3 class="text-base sm:text-lg font-semibold text-olive-black mb-2">Enlaces</h3>
+            <div class="flex flex-col sm:flex-row flex-wrap gap-2">
+              {project.details.links.map((link) => (
+                <a
+                  class="bg-sunset text-white px-4 py-2.5 rounded-lg hover:bg-sunset/90 transition-colors text-center text-sm sm:text-base font-medium"
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {link.name}
+                </a>
+              ))}
+            </div>
+          </section>
+
+        </aside>
+      </div>
+    </div>
+  </section>
+</Layout>

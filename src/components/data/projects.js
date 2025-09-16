@@ -8,91 +8,30 @@
   export const projects = [
     {
       id: 1,
-      title: "Types of Data Professionals",
-      description: "Análisis completo de los diferentes tipos de profesionales en el campo de datos, incluyendo competencias, rangos salariales y tendencias de popularidad en el mercado laboral.",
-      category: "Desarrollo web",
-      image: "/assets/images/projects/data-professionals.jpg",
+      slug: "lung-cancer-risk-prediction",
+      title: "Predicción de Riesgo de Cáncer de Pulmón",
+      description: "Este proyecto utiliza aprendizaje automático (machine learning) para predecir la probabilidad de que una persona desarrolle cáncer de pulmón, basándose en factores como edad, género, exposición a agentes de riesgo y antecedentes médicos. Incluye una aplicación interactiva construida con Streamlit y un modelo entrenado con scikit-learn.",
+      category: [
+        "Ciencia de datos",
+      ],
+      image: "/assets/images/projects/lung-cancer-risk-prediction.png",
       tags: ["Data Engineer", "ML Engineer", "Data Scientist", "Data Analyst"],
       details: {
         overview: "Este proyecto analiza la evolución de los roles en ciencia de datos y las competencias requeridas para cada posición.",
-        technologies: ["Python", "D3.js", "Pandas", "Matplotlib"],
+        technologies: ["Python", "Streamlit", "Pandas", "Matplotlib", "Numpy", "Scikit-learn"],
         features: [
-          "Visualización interactiva de competencias",
-          "Análisis de tendencias salariales",
-          "Comparación de roles por industria",
-          "Dashboard interactivo"
+          "Interfaz intuitiva: Aplicación web fácil de usar construida con Streamlit",
+          "Predicción en tiempo real: Resultados instantáneos basados en los datos ingresados",
+          "Visualizaciones: Gráficos informativos sobre la probabilidad de riesgo",
+          "Modelo robusto: Random Forest optimizado con validación cruzada",
+          "Preprocesamiento automático: Manejo inteligente de variables categóricas y numéricas"
         ],
         links: [
-          { name: "Ver proyecto", url: "https://github.com/carlos/data-professionals" },
+          { name: "Ver en github", url: "https://github.com/carlossalinasmorales/lung-cancer-risk-prediction" },
           { name: "Demo en vivo", url: "https://data-professionals-demo.com" }
         ]
       }
     },
-    {
-      id: 2,
-      title: "Curve Analysis",
-      description: "Análisis estadístico avanzado de curvas de datos con técnicas de regresión lineal y detección de outliers para optimizar modelos predictivos.",
-      category: "Minería de datos",
-      image: "/assets/images/projects/curve-analysis.jpg",
-      tags: ["Curve", "Bad repartition", "Linear", "Outlier"],
-      metrics: { r2: 0.859, correlation: 0.927 },
-      details: {
-        overview: "Sistema de análisis de curvas que implementa algoritmos avanzados para detectar patrones y anomalías en datasets complejos.",
-        technologies: ["R", "Shiny", "ggplot2", "caret"],
-        features: [
-          "Detección automática de outliers",
-          "Análisis de correlación avanzado",
-          "Visualización interactiva de curvas",
-          "Reportes automatizados"
-        ],
-        links: [
-          { name: "Código fuente", url: "https://github.com/carlos/curve-analysis" },
-          { name: "Documentación", url: "https://curve-analysis-docs.com" }
-        ]
-      }
-    },
-    {
-      id: 3,
-      title: "Document Formatting Options",
-      description: "Sistema completo de formateo de documentos con múltiples opciones de personalización, generación automática de contenido y exportación a diferentes formatos.",
-      category: "Panel",
-      image: "/assets/images/projects/document-formatting.jpg",
-      tags: ["Text formatting", "Table of content", "Horizontal line separator", "Title numbering"],
-      details: {
-        overview: "Plataforma web para formateo avanzado de documentos con interfaz intuitiva y múltiples opciones de exportación.",
-        technologies: ["React", "Node.js", "MongoDB", "PDF.js"],
-        features: [
-          "Formateo automático de texto",
-          "Generación de índices",
-          "Exportación a PDF/Word",
-          "Plantillas personalizables"
-        ],
-        links: [
-          { name: "Aplicación web", url: "https://document-formatter.com" },
-          { name: "API docs", url: "https://docs.document-formatter.com" }
-        ]
-      }
-    },
-    {
-      id: 4,
-      title: "Bubble Chart / Categorization",
-      description: "Visualización interactiva de datos complejos mediante gráficos de burbujas categorizados, permitiendo análisis multidimensional de grandes volúmenes de información.",
-      category: "D3.js",
-      image: "/assets/images/projects/bubble-chart.jpg",
-      tags: ["Interactive", "Ticks and tick labels", "Axes position", "Drawing"],
-      details: {
-        overview: "Biblioteca de visualización avanzada que permite crear gráficos de burbujas interactivos con capacidades de zoom y filtrado.",
-        technologies: ["D3.js", "JavaScript", "SVG", "Canvas"],
-        features: [
-          "Zoom y pan interactivo",
-          "Filtrado dinámico por categorías",
-          "Animaciones fluidas",
-          "Exportación de imágenes"
-        ],
-        links: [
-          { name: "Demo interactivo", url: "https://bubble-chart-demo.com" },
-          { name: "NPM Package", url: "https://npmjs.com/package/bubble-chart-lib" }
-        ]
-      }
-    }
+ 
+
   ];

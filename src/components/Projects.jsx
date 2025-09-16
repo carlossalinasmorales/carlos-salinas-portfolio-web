@@ -3,16 +3,26 @@ import { categories, projects } from "../components/data/projects";
 
 const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState("Mostrar todo");
-  const [selectedProject, setSelectedProject] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
   const sliderRef = useRef(null);
   const intervalRef = useRef(null);
+  const containerRef = useRef(null);
+  const touchStartXRef = useRef(0);
+  const [dragX, setDragX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
 
   const filteredProjects = selectedCategory === "Mostrar todo" 
     ? projects 
-    : projects.filter(project => project.category === selectedCategory);
+    : projects.filter(project => {
+        // Si category es un array, verificar si contiene la categoría seleccionada
+        if (Array.isArray(project.category)) {
+          return project.category.includes(selectedCategory);
+        }
+        // Si category es un string, comparar directamente
+        return project.category === selectedCategory;
+      });
 
   // Slider functions
   const nextSlide = () => {
@@ -47,24 +57,44 @@ const Projects = () => {
     setCurrentSlide(0);
   }, [selectedCategory]);
 
-  const openModal = (project) => {
-    setSelectedProject(project);
-    // Prevenir scroll del body cuando el modal está abierto
-    document.body.style.overflow = 'hidden';
+  // Touch handlers (mobile swipe)
+  const onTouchStart = (e) => {
+    if (filteredProjects.length <= 1) return;
+    setIsAutoPlaying(false);
+    setIsDragging(true);
+    touchStartXRef.current = e.touches[0].clientX;
+    setDragX(0);
   };
 
-  const closeModal = () => {
-    setSelectedProject(null);
-    // Restaurar scroll del body
-    document.body.style.overflow = 'unset';
+  const onTouchMove = (e) => {
+    if (!isDragging) return;
+    const currentX = e.touches[0].clientX;
+    setDragX(currentX - touchStartXRef.current);
   };
 
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, []);
+  const settleAfterDrag = (finalDragX) => {
+    const width = containerRef.current?.getBoundingClientRect().width || 1;
+    const threshold = Math.min(60, width * 0.1);
+    if (finalDragX > threshold) {
+      prevSlide();
+    } else if (finalDragX < -threshold) {
+      nextSlide();
+    }
+    setIsDragging(false);
+    setDragX(0);
+    setTimeout(() => setIsAutoPlaying(true), 300);
+  };
+
+  const onTouchEnd = () => {
+    if (!isDragging) return;
+    settleAfterDrag(dragX);
+  };
+
+  const onTouchCancel = () => {
+    if (!isDragging) return;
+    settleAfterDrag(dragX);
+  };
+
 
   return (
     <section id="projects" className="pb-12 bg-white">
@@ -121,11 +151,26 @@ const Projects = () => {
           onMouseLeave={() => setIsHovered(false)}
         >
           {/* Slider Container */}
-          <div className="overflow-hidden rounded-xl">
+          <div 
+            ref={containerRef}
+            className="overflow-hidden rounded-xl"
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+            onTouchCancel={onTouchCancel}
+            style={{ touchAction: 'pan-y' }}
+          >
             <div 
               ref={sliderRef}
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+              className={`flex ${isDragging ? '' : 'transition-transform duration-500 ease-in-out'}`}
+              style={{
+                transform: (() => {
+                  const width = containerRef.current?.getBoundingClientRect().width || 1;
+                  const basePercent = -currentSlide * 100;
+                  const deltaPercent = isDragging ? (dragX / width) * 100 : 0;
+                  return `translateX(calc(${basePercent}% + ${deltaPercent}%))`;
+                })()
+              }}
             >
               {filteredProjects.map((project) => (
                 <div key={project.id} className="w-full flex-shrink-0">
@@ -143,7 +188,7 @@ const Projects = () => {
                       <div className="absolute inset-0 bg-black/20"></div>
                       <div className="absolute top-3 sm:top-4 lg:top-6 left-3 sm:left-4 lg:left-6">
                         <span className="bg-white/90 backdrop-blur-sm px-2 sm:px-3 lg:px-4 py-1 sm:py-1.5 lg:py-2 rounded-full text-xs sm:text-sm font-medium text-gray-700">
-                          {project.category}
+                          {Array.isArray(project.category) ? project.category[0] : project.category}
                         </span>
                       </div>
                     </div>
@@ -188,12 +233,12 @@ const Projects = () => {
 
                       {/* Action Button - Responsivo */}
                       <div className="flex">
-                        <button 
-                          onClick={() => openModal(project)}
-                          className="w-full sm:w-auto bg-sunset cursor-pointer py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg font-medium hover:bg-olive-black hover:text-white transition-colors text-sm sm:text-base"
+                        <a 
+                          href={`/projects/${project.slug}`}
+                          className="w-full sm:w-auto bg-sunset cursor-pointer py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg font-medium hover:bg-olive-black hover:text-white transition-colors text-sm sm:text-base text-center"
                         >
                           Ver detalles
-                        </button>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -207,7 +252,7 @@ const Projects = () => {
             <>
               <button
                 onClick={prevSlide}
-                className="hidden sm:block absolute left-2 lg:left-4 top-1/2 transform -translate-y-1/2 bg-white/90 backdrop-blur-sm text-gray-700 p-2 lg:p-3 rounded-full shadow-lg hover:bg-white hover:shadow-xl transition-all duration-300 z-10"
+                className="hidden cursor-pointer sm:block absolute left-2 lg:left-4 top-1/2 transform -translate-y-1/2 bg-white/90 backdrop-blur-sm text-gray-700 p-2 lg:p-3 rounded-full shadow-lg hover:bg-white hover:shadow-xl transition-all duration-300 z-10"
               >
                 <svg className="w-4 h-4 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -215,7 +260,7 @@ const Projects = () => {
               </button>
               <button
                 onClick={nextSlide}
-                className="hidden sm:block absolute right-2 lg:right-4 top-1/2 transform -translate-y-1/2 bg-white/90 backdrop-blur-sm text-gray-700 p-2 lg:p-3 rounded-full shadow-lg hover:bg-white hover:shadow-xl transition-all duration-300 z-10"
+                className="hidden cursor-pointer sm:block absolute right-2 lg:right-4 top-1/2 transform -translate-y-1/2 bg-white/90 backdrop-blur-sm text-gray-700 p-2 lg:p-3 rounded-full shadow-lg hover:bg-white hover:shadow-xl transition-all duration-300 z-10"
               >
                 <svg className="w-4 h-4 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -242,92 +287,6 @@ const Projects = () => {
           )}
         </div>
 
-        {/* Modal - Completamente responsivo */}
-        {selectedProject && (
-          <div className="fixed inset-0 bg-black/50 flex items-start sm:items-center justify-center p-0 sm:p-4 z-50 overflow-y-auto">
-            <div className="bg-white w-full h-full sm:h-auto sm:rounded-xl sm:max-w-4xl sm:w-full sm:max-h-[90vh] overflow-y-auto">
-              <div className="p-4 sm:p-6">
-                {/* Modal Header */}
-                <div className="flex justify-between items-start mb-4 sm:mb-6">
-                  <div className="flex-1 pr-4">
-                    <h3 className="text-xl sm:text-2xl font-bold text-olive-black mb-2">
-                      {selectedProject.title}
-                    </h3>
-                    <span className="bg-sunset/20 text-sunset px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium">
-                      {selectedProject.category}
-                    </span>
-                  </div>
-                  <button
-                    onClick={closeModal}
-                    className="text-gray-400 hover:text-gray-600 text-2xl sm:text-3xl flex-shrink-0 w-8 h-8 flex items-center justify-center"
-                  >
-                    ×
-                  </button>
-                </div>
-
-                {/* Project Image */}
-                <div 
-                  className="h-48 sm:h-64 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg mb-4 sm:mb-6"
-                  style={{
-                    backgroundImage: `url(${selectedProject.image})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center'
-                  }}
-                ></div>
-
-                {/* Project Details */}
-                <div className="space-y-4 sm:space-y-6">
-                  <div>
-                    <h4 className="text-base sm:text-lg font-semibold text-olive-black mb-2">Descripción</h4>
-                    <p className="text-olive-black/70 leading-relaxed text-sm sm:text-base">
-                      {selectedProject.details.overview}
-                    </p>
-                  </div>
-
-                  <div>
-                    <h4 className="text-base sm:text-lg font-semibold text-olive-black mb-2">Tecnologías</h4>
-                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                      {selectedProject.details.technologies.map((tech, index) => (
-                        <span
-                          key={index}
-                          className="bg-gray-100 text-olive-black px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="text-base sm:text-lg font-semibold text-olive-black mb-2">Características</h4>
-                    <ul className="list-disc list-inside text-olive-black/70 space-y-1 text-sm sm:text-base">
-                      {selectedProject.details.features.map((feature, index) => (
-                        <li key={index} className="leading-relaxed">{feature}</li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h4 className="text-base sm:text-lg font-semibold text-olive-black mb-2">Enlaces</h4>
-                    <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3">
-                      {selectedProject.details.links.map((link, index) => (
-                        <a
-                          key={index}
-                          href={link.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="bg-sunset text-white px-4 py-2.5 rounded-lg hover:bg-sunset/90 transition-colors text-center text-sm sm:text-base font-medium"
-                        >
-                          {link.name}
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </section>
   );

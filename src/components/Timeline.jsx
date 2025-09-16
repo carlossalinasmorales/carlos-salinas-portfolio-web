@@ -73,7 +73,7 @@ const Timeline = () => {
             y1="100"
             x2="900"
             y2="100"
-            stroke="#E5E7EB"
+            stroke="#EAC396"
             strokeWidth="2"
           />
 
@@ -86,7 +86,7 @@ const Timeline = () => {
                   cx={x}
                   cy="100"
                   r="6"
-                  fill="#374151"
+                  fill="#403D39"
                 />
                 
                 {/* Año */}
@@ -121,7 +121,7 @@ const Timeline = () => {
       <div className="md:hidden">
         <div className="relative pl-4 space-y-8">
           {/* Línea vertical simple */}
-          <div className="absolute left-4 top-4 bottom-6 w-0.5 bg-olive-black/20"></div>
+          <div className="absolute left-4 top-4 bottom-6 w-0.5 bg-sunset"></div>
           
           {timelineData.map((item, index) => (
             <div key={index} className="relative">
