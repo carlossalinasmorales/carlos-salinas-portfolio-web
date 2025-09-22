@@ -16,7 +16,7 @@
 
 @font-face {
     font-family: 'GeneralSans-Bold';
-    src: url('fonts/GeneralSans-Bold.woff2') format('woff2');
+    src: url('/fonts/GeneralSans-Bold.woff2') format('woff2');
 }
 
 @font-face { 

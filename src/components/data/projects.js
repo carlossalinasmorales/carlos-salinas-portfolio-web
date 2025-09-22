@@ -10,12 +10,16 @@
       id: 1,
       slug: "lung-cancer-risk-prediction",
       title: "Predicción de Riesgo de Cáncer de Pulmón",
-      description: "Este proyecto utiliza aprendizaje automático (machine learning) para predecir la probabilidad de que una persona desarrolle cáncer de pulmón, basándose en factores como edad, género, exposición a agentes de riesgo y antecedentes médicos. Incluye una aplicación interactiva construida con Streamlit y un modelo entrenado con scikit-learn.",
+      shortDescription: "App en Streamlit que estima el riesgo de cáncer de pulmón con un modelo de ML y visualizaciones simples.",
+      description: `
+        <p>Este proyecto utiliza aprendizaje automático (machine learning) para predecir la probabilidad de que una persona desarrolle cáncer de pulmón, basándose en factores como edad, género, exposición a agentes de riesgo y antecedentes médicos.</p>
+        <img src="/assets/images/projects/lung-cancer-risk-prediction/portada.png" alt="Portada del proyecto cáncer de pulmón" />
+        <p>Incluye una aplicación interactiva construida con Streamlit y un modelo entrenado con scikit-learn, además de visualizaciones que ayudan a interpretar el riesgo estimado.</p>
+      `,
       category: [
         "Ciencia de datos",
       ],
-      image: "/assets/images/projects/lung-cancer-risk-prediction.png",
-      tags: ["Data Engineer", "ML Engineer", "Data Scientist", "Data Analyst"],
+      image: "/assets/images/projects/lung-cancer-risk-prediction/portada.png",
       details: {
         overview: "Este proyecto analiza la evolución de los roles en ciencia de datos y las competencias requeridas para cada posición.",
         technologies: ["Python", "Streamlit", "Pandas", "Matplotlib", "Numpy", "Scikit-learn"],

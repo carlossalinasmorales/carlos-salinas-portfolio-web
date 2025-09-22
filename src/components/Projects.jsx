@@ -200,24 +200,10 @@ const Projects = () => {
                       </h3>
                       
                       <p className="text-olive-black/70 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base lg:text-lg">
-                        {project.description}
+                        {project.shortDescription || project.description}
                       </p>
 
-                      {/* Tags - Mejorado para móvil */}
-                      <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-6">
-                        {project.tags.slice(0, 4).map((tag, index) => (
-                          <span
-                            key={index}
-                            className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium ${
-                              index === 0
-                                ? "bg-sunset/20 text-sunset"
-                                : "bg-gray-100 text-olive-black"
-                            }`}
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
+                     
 
                       {/* Metrics (if available) - Responsivo */}
                       {project.metrics && (

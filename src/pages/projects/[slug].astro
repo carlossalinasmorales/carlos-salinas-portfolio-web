@@ -4,24 +4,10 @@ import { projects } from "../../components/data/projects";
 
 // Función requerida para rutas dinámicas
 export async function getStaticPaths() {
-  return [
-    {
-      params: { slug: "lung-cancer-risk-prediction" },
-      props: { project: projects[0] },
-    },
-    {
-      params: { slug: "curve-analysis" },
-      props: { project: projects[1] },
-    },
-    {
-      params: { slug: "document-formatting-options" },
-      props: { project: projects[2] },
-    },
-    {
-      params: { slug: "bubble-chart-categorization" },
-      props: { project: projects[3] },
-    },
-  ];
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
 }
 
 // Obtener el proyecto desde props
@@ -33,12 +19,12 @@ const { project } = Astro.props;
 <Layout title={`${project.title} | Proyectos`}>
   <section class="py-12 md:py-20 bg-white">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
-      <div class="flex items-center gap-2 text-sm text-olive-black/70 py-6">
+      <div class="flex items-center gap-2 text-sm text-olive-black/70 py-6 min-w-0">
         <a class="hover:underline" href="/">Inicio</a>
         <span>/</span>
         <a class="hover:underline" href="/#projects">Proyectos</a>
         <span>/</span>
-        <span class="text-olive-black">{project.title}</span>
+        <span class="text-olive-black truncate flex-1 max-w-[60vw] sm:max-w-none">{project.title}</span>
       </div>
 
       <header class="mb-6 sm:mb-8">
@@ -46,26 +32,20 @@ const { project } = Astro.props;
         <div class="flex items-center gap-2 flex-wrap">
           {Array.isArray(project.category) ? (
             project.category.map((cat) => (
-              <span class="bg-sunset/20 text-sunset px-3 py-1 rounded-full text-xs sm:text-sm font-medium">
+              <span class="bg-sunset/15 text-sunset px-3 py-1 rounded-full text-xs sm:text-sm font-medium">
                 {cat}
               </span>
             ))
           ) : (
-            <span class="bg-sunset/20 text-sunset px-3 py-1 rounded-full text-xs sm:text-sm font-medium">
+            <span class="bg-sunset/15 text-sunset px-3 py-1 rounded-full text-xs sm:text-sm font-medium">
               {project.category}
             </span>
-          )}
-          {project.metrics && (
-            <div class="flex gap-2 text-xs sm:text-sm text-olive-black">
-              <span class="bg-gray-100 px-2 sm:px-3 py-1 rounded-full">R² → {project.metrics.r2}</span>
-              <span class="bg-gray-100 px-2 sm:px-3 py-1 rounded-full">Correlation → {project.metrics.correlation}</span>
-            </div>
           )}
         </div>
       </header>
 
       <div
-        class="h-52 sm:h-72 lg:h-96 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl mb-6 sm:mb-8 overflow-hidden relative"
+        class="h-52 sm:h-72 lg:h-96 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl mb-6 sm:mb-10 overflow-hidden relative shadow-sm"
         style={`background-image:url(${project.image});background-size:cover;background-position:center;`}
       >
         <div class="absolute inset-0 bg-black/20"></div>
@@ -73,24 +53,15 @@ const { project } = Astro.props;
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-10 items-start">
         <article class="lg:col-span-2 space-y-6">
-          <section>
+          <section class="bg-white rounded-2xl border border-gray-100 p-5 sm:p-6 shadow-sm">
             <h2 class="text-lg sm:text-xl font-semibold text-olive-black mb-2">Descripción</h2>
-            <p class="text-olive-black/70 leading-relaxed">{project.details.overview}</p>
-          </section>
-
-          <section>
-            <h2 class="text-lg sm:text-xl font-semibold text-olive-black mb-2">Características</h2>
-            <ul class="list-disc list-inside text-olive-black/70 space-y-1">
-              {project.details.features.map((feature) => (
-                <li>{feature}</li>
-              ))}
-            </ul>
+            <div class="prose max-w-none prose-img:rounded-xl prose-img:shadow-sm prose-p:text-olive-black/70 prose-li:text-olive-black/70" set:html={project.description}></div>
           </section>
         </article>
 
         <aside class="lg:col-span-1 space-y-6">
-          <section>
-            <h3 class="text-base sm:text-lg font-semibold text-olive-black mb-2">Tecnologías</h3>
+          <section class="bg-white rounded-2xl border border-gray-100 p-5 sm:p-6 shadow-sm">
+            <h3 class="text-base sm:text-lg font-medium text-olive-black mb-2">Tecnologías</h3>
             <div class="flex flex-wrap gap-2">
               {project.details.technologies.map((tech) => (
                 <span class="bg-gray-100 text-olive-black px-3 py-1 rounded-full text-xs sm:text-sm">{tech}</span>
@@ -98,8 +69,8 @@ const { project } = Astro.props;
             </div>
           </section>
 
-          <section>
-            <h3 class="text-base sm:text-lg font-semibold text-olive-black mb-2">Enlaces</h3>
+          <section class="bg-white rounded-2xl border border-gray-100 p-5 sm:p-6 shadow-sm">
+            <h3 class="text-base sm:text-lg font-medium text-olive-black mb-2">Enlaces</h3>
             <div class="flex flex-col sm:flex-row flex-wrap gap-2">
               {project.details.links.map((link) => (
                 <a
